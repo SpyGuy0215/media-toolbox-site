@@ -147,9 +147,7 @@ export default function Home() {
     }, [lastMessage]);
 
     useEffect(() => {
-        console.log('Checking status...')
         // Call the API to check if the server is running
-        console.log(BASE_API_URL)
         fetch(`${BASE_API_URL}`)
             .then(response => {
                 if (!response.ok) {
@@ -158,7 +156,7 @@ export default function Home() {
                 return response.json();
             })
             .then(data => {
-                console.log('Server is running:', data);
+                // do nothing for now
             })
             .catch(error => {
                 console.error('Error checking server status:', error);
@@ -220,11 +218,14 @@ export default function Home() {
                     const fileID = data.fileID;
                     console.log(fileID);
                     setFileList(prevList => [...prevList, {name: file.name, id: fileID, type: file.type}]);
+
+                    // select the last newly uploaded file
+                    setSelectedFile({name: file.name, id: fileID, type: file.type});
                 })
         })
         // Reset the input value so the same file can be selected again
         event.target.value = '';
-        console.log(fileList)
+        console.log(fileList);
     }
 
     function handleFileRemove(fileID) {
