@@ -545,7 +545,7 @@ export default function Home() {
                         <TabsContent value={'transcribe'} className={'w-full h-full p-4'}>
                             <h2 className={'text-xl font-semibold text-slate-800 mb-4'}>Transcribe Media</h2>
                             <h3 className={'text-base'}>Coming soon...</h3>
-                            <h4 className={'text-sm text-neutral-500'}>(AKA i'm too lazy to update the frontend)</h4>
+                            <h4 className={'text-sm text-neutral-500'}>(AKA im too lazy to update the frontend)</h4>
                         </TabsContent>
                     </Tabs>
                 </div>
