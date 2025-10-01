@@ -26,7 +26,7 @@ export default function Sidebar() {
                     Website
                 </Button>
                 <Button className={'mb-2 w-2/3 mx-auto'}
-                        onClick={() => window.open('https://github.com/SpyGuy0215/media-toolbox-site')}
+                        onClick={() => window.open('https://github.com/SpyGuy0215/media-toolbox')}
                 >
                     <LuGithub />
                     Server
