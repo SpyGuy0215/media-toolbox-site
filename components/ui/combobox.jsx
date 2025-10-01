@@ -6,7 +6,7 @@ import {Button} from "@/components/ui/button";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 
-export function Combobox({items, value, onValueChange, placeholder = "Select an option", className}) {
+export function Combobox({items, value, onValueChange, placeholder = "Select an option", className, disabled=false}) {
     const [open, setOpen] = React.useState(false);
     const selectedItem = items.find(item => item.value === value);
 
@@ -17,6 +17,7 @@ export function Combobox({items, value, onValueChange, placeholder = "Select an 
                     variant="outline"
                     role="combobox"
                     className={cn("w-full justify-between", className)}
+                    disabled={disabled}
                 >
                     {selectedItem ? selectedItem.label : placeholder}
                     <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
