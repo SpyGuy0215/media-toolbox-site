@@ -159,7 +159,7 @@ export default function TranscribePage() {
     }, [lastMessage, hasDownloaded, processingProgress, selectedFile, outFormat, uploadedFileID]);
 
     return (
-        <div id={'main'} className={'flex flex-row w-full'}>
+        <div id={'main'} className={'flex flex-col md:flex-row w-full min-h-screen'}>
             <Sidebar/>
             <AlertDialog open={isProcessingDialogOpen}>
                 <AlertDialogContent>
@@ -202,11 +202,11 @@ export default function TranscribePage() {
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-            <div id={'content'} className={'p-8 w-full'}>
-                <h1 className={'font-inter text-4xl font-bold'}>Transcribe</h1>
-                <p className={'text-slate-600 mt-4'}>Upload an audio file to generate a transcript.</p>
-                <div id={'transcribe-section'} className={'mt-8'}>
-                    <div className={'flex flex-row w-9/12'}>
+            <div id={'content'} className={'w-full p-4 sm:p-8 max-w-screen-2xl mx-auto flex flex-col'}>
+                <h1 className={'font-inter font-bold text-3xl sm:text-4xl'}>Transcribe</h1>
+                <p className={'text-slate-600 mt-3 sm:mt-4 text-sm sm:text-base'}>Upload an audio file to generate a transcript.</p>
+                <div id={'transcribe-section'} className={'mt-6 sm:mt-8 w-full'}>
+                    <div className={'flex flex-col md:flex-row w-full gap-6 lg:gap-10 items-stretch'}>
                         <Dropzone
                             onDrop={(files) => {
                                 if(files.length === 0){
@@ -217,41 +217,41 @@ export default function TranscribePage() {
                                 setSelectedFile(files[0]);
                             }}
                             accept={{ 'audio/*': [] }}
-                            className={'min-h-[60vh] min-w-[40vw]'}
+                            className={'min-h-[40vh] w-full md:min-h-[55vh] md:flex-1 rounded-lg border-2 border-dashed border-slate-300 bg-white/60 backdrop-blur-sm'}
                         />
-                        <div className={'flex flex-col'}>
-                            <div id={'transcription-options'} className={'ml-30'}>
-                                <div className={'mb-10'}>
-                                    <p className={'text-sm font-medium mb-2'}>Model</p>
+                        <div className={'w-full md:w-80 lg:w-96 flex-shrink-0'}>
+                            <div id={'transcription-options'} className={'w-full p-4 sm:p-5 md:p-6 bg-white/70 backdrop-blur-sm border border-gray-200 rounded-lg flex flex-col'}>
+                                <div className={'mb-8'}>
+                                    <p className={'text-xs sm:text-sm font-medium mb-2'}>Model</p>
                                     <Combobox
                                         items={modelOptions}
                                         value={model}
                                         placeholder="Select model"
                                         disabled={!selectedFile}
-                                        className={'w-fit'}
+                                        className={'w-full sm:w-fit'}
                                         onValueChange={(val) => setModel(val)}
                                     />
-                                    <p className={'text-xs text-slate-500 mt-2'}>Choose a transcription model.</p>
+                                    <p className={'text-[11px] sm:text-xs text-slate-500 mt-2'}>Choose a transcription model.</p>
                                 </div>
-                                <div className={'mb-10'}>
-                                    <p className={'text-sm font-medium mb-2'}>Output Format</p>
+                                <div className={'mb-8'}>
+                                    <p className={'text-xs sm:text-sm font-medium mb-2'}>Output Format</p>
                                     <Combobox
                                         items={formatOptions}
                                         value={outFormat}
                                         placeholder="Select format"
                                         disabled={!selectedFile}
-                                        className={'w-fit'}
+                                        className={'w-full sm:w-fit'}
                                         onValueChange={(val) => setOutFormat(val)}
                                     />
-                                    <p className={'text-xs text-slate-500 mt-2'}>Subtitle / text file format.</p>
+                                    <p className={'text-[11px] sm:text-xs text-slate-500 mt-2'}>Subtitle / text file format.</p>
                                 </div>
                                 <Button
-                                    className={'bg-emerald-400 hover:bg-emerald-500 w-50 text-lg'}
+                                    className={'bg-emerald-500 hover:bg-emerald-600 w-full sm:w-52 text-base sm:text-lg'}
                                     disabled={!selectedFile || !model || !outFormat || isSubmitting}
                                     onClick={handleTranscribe}
                                 >{isSubmitting ? 'Starting...' : 'Transcribe'}</Button>
                                 {selectedFile && (
-                                    <p className={'mt-6 text-sm text-slate-500'}>Selected: {selectedFile.name}</p>
+                                    <p className={'mt-5 text-xs sm:text-sm text-slate-500 break-all'}>Selected: {selectedFile.name}</p>
                                 )}
                             </div>
                         </div>

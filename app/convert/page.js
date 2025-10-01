@@ -218,8 +218,9 @@ export default function ConvertPage() {
     };
 
     return (
-        <div id={'main'} className={'flex flex-row w-full'}>
+        <div id={'main'} className={'flex flex-col md:flex-row w-full min-h-screen'}>
             <Sidebar/>
+            {/* Processing Dialog */}
             <AlertDialog id={'processing-dialog'} open={isProcessingDialogOpen}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
@@ -264,6 +265,7 @@ export default function ConvertPage() {
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
+            {/* Error Dialog */}
             <AlertDialog id={'error-dialog'} open={isErrorDialogOpen}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
@@ -280,20 +282,20 @@ export default function ConvertPage() {
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-            <div id={'content'} className={'p-8 w-full'}>
-                <h1 className={'font-inter text-4xl font-bold'}>Convert Files</h1>
-                <div id={'convert-section'} className={'mt-8'}>
+            <div id={'content'} className={'w-full p-4 sm:p-8 max-w-screen-2xl mx-auto'}>
+                <h1 className={'font-inter font-bold text-3xl sm:text-4xl'}>Convert Files</h1>
+                <div id={'convert-section'} className={'mt-6 sm:mt-8'}>
                     <Form {...conversionForm}>
                         <form onSubmit={conversionForm.handleSubmit(onConversionFormSubmit, (e) => {
                             console.log('[ConvertPage] Form submission errors: ');
                             console.log(e);
-                        })} className={'flex flex-row w-9/12'}>
+                        })} className={'flex flex-col md:flex-row w-full gap-6 lg:gap-10'}>
                             <FormField
                                 control={conversionForm.control}
                                 name={'filename'}
                                 render={() => (
-                                    <FormItem>
-                                        <FormLabel>File to Convert</FormLabel>
+                                    <FormItem className={'w-full md:flex-1'}>
+                                        <FormLabel className={'text-sm sm:text-base'}>File to Convert</FormLabel>
                                         <Dropzone onDrop={(files) => {
                                             if(files.length === 0){
                                                 conversionForm.setValue('filename', '');
@@ -302,45 +304,48 @@ export default function ConvertPage() {
                                                 setSelectedFileType(null);
                                                 return;
                                             }
-                                            const file = files[0]; // for now, only handle one file
+                                            const file = files[0];
                                             conversionForm.setValue('filename', file.name);
-                                            conversionForm.setValue('outputFormat', ""); // Reset output format when a new file is selected
+                                            conversionForm.setValue('outputFormat', "");
                                             setSelectedFile(file);
                                             setSelectedFileType(file.type);
                                             console.log(conversionForm.getValues());
                                         }}
-                                                  className={'min-h-[60vh] min-w-[40vw]'}
+                                                  className={'min-h-[40vh] md:min-h-[60vh] w-full rounded-lg border-2 border-dashed border-slate-300 bg-white/60 backdrop-blur-sm'}
                                         />
                                     </FormItem>
                                 )}
                             />
-                            <div className={'flex flex-col'}>
-                                <div id={'conversion-options'} className={'ml-30'}>
+                            <div className={'w-full md:w-80 lg:w-96 md:flex-shrink-0'}>
+                                <div id={'conversion-options'} className={'w-full p-4 sm:p-5 bg-white/70 backdrop-blur-sm border border-gray-200 rounded-lg flex flex-col'}>
                                     <FormField
                                         control={conversionForm.control}
                                         name={'outputFormat'}
                                         render={({field}) => (
-                                            <FormItem className={'mb-10'}>
-                                                <FormLabel>Output Format</FormLabel>
+                                            <FormItem className={'mb-8'}>
+                                                <FormLabel className={'text-sm sm:text-base'}>Output Format</FormLabel>
                                                 <FormControl>
                                                     <Combobox
                                                         items={getOutputFormatOptions()}
                                                         value={field.value}
                                                         placeholder="Select output format"
                                                         disabled={selectedFileType == null}
-                                                        className={'w-fit'}
+                                                        className={'w-full sm:w-52'}
                                                         onValueChange={field.onChange}
                                                     />
                                                 </FormControl>
-                                                <FormDescription>The desired output format.</FormDescription>
+                                                <FormDescription className={'text-xs sm:text-sm'}>The desired output format.</FormDescription>
                                             </FormItem>
                                         )}
                                     />
-                                    <Button type={'submit'} className={'bg-emerald-400 hover:bg-emerald-500 w-50 text-lg'}
-                                    onClick={() => {
-                                        console.log('[ConvertPage] Submit button clicked');
-                                        conversionForm.handleSubmit(onConversionFormSubmit);
-                                    }}>Convert</Button>
+                                    <Button type={'submit'} className={'bg-emerald-500 hover:bg-emerald-600 w-full sm:w-52 text-base sm:text-lg'}
+                                            onClick={() => {
+                                                console.log('[ConvertPage] Submit button clicked');
+                                                conversionForm.handleSubmit(onConversionFormSubmit);
+                                            }}>Convert</Button>
+                                    {conversionForm.getValues('filename') && (
+                                        <p className={'mt-5 text-xs sm:text-sm text-slate-500 break-all'}>Selected: {conversionForm.getValues('filename')}</p>
+                                    )}
                                 </div>
                             </div>
                         </form>
