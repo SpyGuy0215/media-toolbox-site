@@ -3,7 +3,7 @@ import * as React from "react";
 import {useCallback} from "react";
 import {Button} from "@/components/ui/button";
 
-export default function Dropzone({onDrop, className}) {
+export default function Dropzone({onDrop, className, accept}) {
     const [files, setFiles] = React.useState([]);
     const _localOnDrop = useCallback((acceptedFiles) => {
         console.log('[Dropzone.js] _localOnDrop called with files: ');
@@ -38,7 +38,7 @@ export default function Dropzone({onDrop, className}) {
         }
     }, [onDrop])
     const {getRootProps, getInputProps, isDragActive} = useDropzone({
-        accept: {
+        accept: accept || {
             'audio/*': [],
             'video/*': [],
             'image/*': []
@@ -56,6 +56,7 @@ export default function Dropzone({onDrop, className}) {
                         <img
                             src={files[0].preview}
                             className={'object-contain max-h-[50vh] rounded-lg'}
+                            alt={files[0].name || 'file preview'}
                             />
                         <p className={'text-center text-gray-700 font-medium mt-4'}>{files[0].name}</p>
                         <p className={'text-center text-gray-400'}>{(files[0].size / 1024 / 1024).toFixed(2)} MB</p>

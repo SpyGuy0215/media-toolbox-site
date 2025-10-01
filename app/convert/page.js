@@ -280,7 +280,7 @@ export default function ConvertPage() {
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-            <div id={'content'} className={'p-8 w-full border border-green-300'}>
+            <div id={'content'} className={'p-8 w-full'}>
                 <h1 className={'font-inter text-4xl font-bold'}>Convert Files</h1>
                 <div id={'convert-section'} className={'mt-8'}>
                     <Form {...conversionForm}>
