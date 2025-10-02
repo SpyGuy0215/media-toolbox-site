@@ -3,6 +3,7 @@ import * as React from "react";
 import {useState, useEffect} from "react";
 import Sidebar from "@/components/Sidebar";
 import * as CONSTANTS from "./constants";
+import Link from 'next/link'; // added import
 
 export default function Home() {
     const [serverStatus, setServerStatus] = useState({status: "unknown"});
@@ -40,7 +41,7 @@ export default function Home() {
             <Sidebar />
             <div id={'content'} className={'p-8 flex flex-col w-full'}>
                 <h1 className={'font-inter text-4xl font-bold'}>Home</h1>
-                <div id={'quick-start'} className={'mt-8 flex flex-row w-full'}>
+                <div id={'quick-start'} className={'mt-8 flex flex-row w-full gap-6'}> {/* added gap */}
                     <div id={'server-status-card'} className={'flex flex-col w-1/4 h-fit p-4 border border-gray-300 rounded-lg'}>
                         <h2 className={'font-inter text-2xl font-semibold'}>Server Status</h2>
                         <p className={'mt-2 text-gray-700 text-sm'}>The current status of the backend server.</p>
@@ -49,6 +50,17 @@ export default function Home() {
                             <p className={'text-gray-800 font-medium'}>{serverStatus.status === "unknown" ? "Fetching status..." : serverStatus.status === "online" ? "Online" : "Offline"}</p>
                         </div>
                     </div>
+                    {/* New navigation cards */}
+                    <Link href={'/transcribe'} className={'flex flex-col w-1/4 h-fit p-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors'}>
+                        <h2 className={'font-inter text-2xl font-semibold'}>Transcription</h2>
+                        <p className={'mt-2 text-gray-700 text-sm'}>Convert audio to text quickly using our transcription tool.</p>
+                        <div className={'mt-4 text-sm text-blue-600 font-medium'}>Go to Transcription →</div>
+                    </Link>
+                    <Link href={'/convert'} className={'flex flex-col w-1/4 h-fit p-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors'}>
+                        <h2 className={'font-inter text-2xl font-semibold'}>Media Conversion</h2>
+                        <p className={'mt-2 text-gray-700 text-sm'}>Convert media files between formats seamlessly.</p>
+                        <div className={'mt-4 text-sm text-blue-600 font-medium'}>Go to Conversion →</div>
+                    </Link>
                 </div>
             </div>
         </div>
